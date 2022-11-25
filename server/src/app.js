@@ -1,8 +1,10 @@
 const express = require("express");
+const cors = require("cors");
 
 const initializeRouter = require("./routes/routes");
 
 const app = express();
+app.use(cors());
 
 app.use((req, res, next) => {
   const start = Date.now();
