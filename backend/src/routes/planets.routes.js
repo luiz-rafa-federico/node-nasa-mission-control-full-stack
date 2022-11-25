@@ -1,6 +1,6 @@
 const express = require("express");
 
-const { listPlanets } = require("../controllers/planets.controller");
+const { listPlanets } = require("./controllers/planets.controller");
 
 const planetsRouter = express.Router({ mergeParams: true });
 
