@@ -1,0 +1,26 @@
+{
+  "name": "nasa-mission-control",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run test --prefix backend && npm run test --prefix frontend",
+    "install-server": "npm install --prefix backend",
+    "install-client": "npm install --prefix client",
+    "install": "npm run install-server && npm run install-client",
+    "server": "npm run watch --prefix backend",
+    "client": "npm run start --prefix frontend",
+    "watch": "npm run server & npm run client"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luiz-rafa-federico/node-nasa-mission-control-full-stack.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/luiz-rafa-federico/node-nasa-mission-control-full-stack/issues"
+  },
+  "homepage": "https://github.com/luiz-rafa-federico/node-nasa-mission-control-full-stack#readme"
+}
