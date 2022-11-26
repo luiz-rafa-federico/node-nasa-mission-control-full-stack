@@ -2,8 +2,8 @@ const { getAllPlanets } = require("./services/planets.service");
 
 const listPlanets = (req, res) => {
   const planets = getAllPlanets();
-  const response = { content: planets, status: "successful" };
-  return res.json(response);
+
+  return res.json(planets);
 };
 
 module.exports = {
