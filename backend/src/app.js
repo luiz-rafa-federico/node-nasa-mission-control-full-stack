@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const morgan = require("morgan");
 
 const initializeRouter = require("./routes/routes");
 
@@ -11,12 +12,14 @@ app.use(
   })
 );
 
-app.use((req, res, next) => {
-  const start = Date.now();
-  next();
-  const delta = Date.now() - start;
-  console.log(`${req.method} ${req.baseUrl}${req.url} ${delta}ms`);
-});
+app.use(morgan("combined"));
+
+// app.use((req, res, next) => {
+//   const start = Date.now();
+//   next();
+//   const delta = Date.now() - start;
+//   console.log(`${req.method} ${req.baseUrl}${req.url} ${delta}ms`);
+// });
 
 app.use(express.json());
 
