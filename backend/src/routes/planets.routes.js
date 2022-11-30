@@ -1,6 +1,6 @@
 const express = require("express");
 
-const { listPlanets } = require("./controllers/planets.controller");
+const { httpListPlanets } = require("./controllers/planets.controller");
 
 const planetsRouter = express.Router({ mergeParams: true });
 
@@ -10,7 +10,7 @@ const planetsRouter = express.Router({ mergeParams: true });
 // });
 
 const planetsRoutes = () => {
-  planetsRouter.get("/", listPlanets);
+  planetsRouter.get("/", httpListPlanets);
 
   return planetsRouter;
 };

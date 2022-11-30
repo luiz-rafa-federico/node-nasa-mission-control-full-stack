@@ -1,8 +1,8 @@
 const express = require("express");
 
 const {
-  createLaunch,
-  listLaunches,
+  httpCreateLaunch,
+  httpListLaunches,
 } = require("./controllers/launches.controller");
 
 const launchesRouter = express.Router({ mergeParams: true });
@@ -13,8 +13,8 @@ const launchesRouter = express.Router({ mergeParams: true });
 // });
 
 const launchesRoutes = () => {
-  launchesRouter.post("/", createLaunch);
-  launchesRouter.get("/", listLaunches);
+  launchesRouter.post("/", httpCreateLaunch);
+  launchesRouter.get("/", httpListLaunches);
 
   return launchesRouter;
 };
