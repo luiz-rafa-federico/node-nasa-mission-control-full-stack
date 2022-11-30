@@ -32,8 +32,11 @@ app.use(
 
 initializeRouter(app);
 
-app.get("/", (req, res) => {
-  res.sendFile("backend/public/index.html");
+app.get("/*", (req, res) => {
+  //res.sendFile(path.join(__dirname, '..', 'public', 'index.html'))
+  res.sendFile(
+    "/Users/luizrafa.federico/Desktop/luiz/Tech/backend/node/nasa-mission-control/backend/public/index.html"
+  );
 });
 
 module.exports = app;

@@ -13,8 +13,6 @@ const launch = {
 
 launches.set(launch.flightNumber, launch);
 
-console.log(launches);
-
 module.exports = {
   launches,
 };
