@@ -20,6 +20,17 @@ app.use((req, res, next) => {
 
 app.use(express.json());
 
+//app.use(express.static(path.join(__dirname, '..', 'public')))
+app.use(
+  express.static(
+    "/Users/luizrafa.federico/Desktop/luiz/Tech/backend/node/nasa-mission-control/backend/public"
+  )
+);
+
 initializeRouter(app);
+
+app.get("/", (req, res) => {
+  res.sendFile("backend/public/index.html");
+});
 
 module.exports = app;

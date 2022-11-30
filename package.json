@@ -10,7 +10,8 @@
     "install": "npm run install-server && npm run install-client",
     "server": "npm run watch --prefix backend",
     "client": "npm run start --prefix frontend",
-    "watch": "npm run server & npm run client"
+    "watch": "npm run server & npm run client",
+    "deploy": "npm run build --prefix frontend && npm start --prefix backend"
   },
   "repository": {
     "type": "git",
