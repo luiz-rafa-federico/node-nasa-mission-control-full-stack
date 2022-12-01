@@ -53,7 +53,7 @@ const httpCreateLaunch = (req, res) => {
   const response = addNewLaunch(launch);
 
   if (response) {
-    return res.status(201).json({ launch, message: "Launch created" });
+    return res.status(201).json({ message: "Launch created", launch });
   } else {
     return res.status(400).json({ error: "Failed to create launch" });
   }
