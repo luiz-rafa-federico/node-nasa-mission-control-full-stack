@@ -24,7 +24,21 @@ const addNewLaunch = (launch) => {
   return launches;
 };
 
+const abortLaunch = (flightNumber) => {
+  const launchToBeAborted = launches.get(flightNumber);
+
+  if (launchToBeAborted) {
+    // launches.delete(flightNumber);
+    launchToBeAborted.upcoming = false;
+    launchToBeAborted.success = false;
+    return launchToBeAborted;
+  } else {
+    return false;
+  }
+};
+
 module.exports = {
   getAllLaunches,
   addNewLaunch,
+  abortLaunch,
 };
