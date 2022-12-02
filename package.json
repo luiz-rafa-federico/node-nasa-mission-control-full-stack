@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npm run test --prefix backend && npm run test --prefix frontend",
+    "test": "npm test --prefix backend && npm test --prefix frontend",
     "install-server": "npm install --prefix backend",
     "install-client": "npm install --prefix client",
     "install": "npm run install-server && npm run install-client",
