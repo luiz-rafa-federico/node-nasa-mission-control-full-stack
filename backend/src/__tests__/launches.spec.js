@@ -12,7 +12,33 @@ describe("Test GET / launches", () => {
 });
 
 describe("Test POST / launches", () => {
-  test("It should respond with a 201 code success", () => {});
+  const completeLaunch = {
+    mission: "ZTM Food Research",
+    rocket: "Apolo Star IXT",
+    launchDate: "January 14, 2025",
+    destination: "Kepler-1410 b",
+  };
+
+  const launchWithoutDate = {
+    mission: "ZTM Food Research",
+    rocket: "Apolo Star IXT",
+    destination: "Kepler-1410 b",
+  };
+
+  test("It should respond with a 201 code success", async () => {
+    const response = await request(app)
+      .post("/launches")
+      .send(launch)
+      .expect("Content-Type", /json/)
+      .expect(201);
+
+    const requestDate = new Date(completeLaunch.launchDate).valueOf();
+    const responseDate = new Date(response.body.launchDate).valueOf();
+
+    expect(responseDate).toBe(requestDate);
+
+    expect(response.body).toMatchObject(launchWithoutDate);
+  });
 
   test("It should catch missing required properties", () => {});
 
