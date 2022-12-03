@@ -1,7 +1,7 @@
 const request = require("supertest");
 const app = require("../app.js");
 
-describe("Test GET / launches", () => {
+describe("Test GET /launches", () => {
   test("It should respond with a 200 code success", async () => {
     const response = await request(app)
       .get("/launches")
@@ -11,12 +11,12 @@ describe("Test GET / launches", () => {
   });
 });
 
-describe("Test POST / launches", () => {
+describe("Test POST /launches", () => {
   const completeLaunch = {
     mission: "ZTM Food Research",
     rocket: "Apolo Star IXT",
-    launchDate: "January 14, 2025",
     destination: "Kepler-1410 b",
+    launchDate: "January 14, 2025",
   };
 
   const launchWithoutDate = {
@@ -28,7 +28,7 @@ describe("Test POST / launches", () => {
   test("It should respond with a 201 code success", async () => {
     const response = await request(app)
       .post("/launches")
-      .send(launch)
+      .send(completeLaunch)
       .expect("Content-Type", /json/)
       .expect(201);
 

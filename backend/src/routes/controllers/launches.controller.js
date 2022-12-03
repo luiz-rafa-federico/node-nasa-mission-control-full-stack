@@ -34,7 +34,7 @@ const httpCreateLaunch = (req, res) => {
     typeof launch.rocket !== "string"
   ) {
     return res.status(400).json({
-      error: "Required fields must all be strings",
+      error: "Required mission, destination, and rocket fields must be strings",
     });
   }
 
@@ -44,8 +44,8 @@ const httpCreateLaunch = (req, res) => {
    * const notDate = new Date("hello")
    * notDate.valueOf() => NaN */
 
-  // if (isNaN(launch.launchDate))
-  if (launch.launchDate.toString() === "Invalid Date") {
+  // if (launch.launchDate.toString() === "Invalid Date")
+  if (isNaN(launch.launchDate)) {
     return res.status(400).json({
       error: "Invalid Date",
     });

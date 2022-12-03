@@ -16,7 +16,7 @@ const loadPlanetsData = () => {
   return new Promise((resolve, reject) => {
     // fs.createReadStream(path.join(__dirname, '..', '..', 'data', 'kepler_data.csv'))
     fs.createReadStream(
-      "/Users/luizrafa.federico/Desktop/luiz/Tech/backend/node/nasa-mission-control/backend/data/kepler_data.csv"
+      "/Users/luizrafa.federico/Desktop/luiz/Tech/backend/node/node-nasa-mission-control-full-stack/backend/data/kepler_data.csv"
     )
       .pipe(
         parse({
