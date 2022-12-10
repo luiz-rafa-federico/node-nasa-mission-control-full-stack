@@ -11,7 +11,8 @@
     "server": "npm run watch --prefix backend",
     "client": "npm run start --prefix frontend",
     "watch": "npm run server & npm run client",
-    "deploy": "npm run build --prefix frontend && npm start --prefix backend"
+    "deploy": "npm run build --prefix frontend && npm start --prefix backend",
+    "deploy-cluster": "npm run build --prefix frontend && npm run cluster --prefix backend"
   },
   "repository": {
     "type": "git",
