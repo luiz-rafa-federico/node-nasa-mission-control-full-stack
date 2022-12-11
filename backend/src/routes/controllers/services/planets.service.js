@@ -2,7 +2,13 @@
 const planets = require("../../../models/planets.mongo.js");
 
 const getAllPlanets = async () => {
-  return await planets.find({});
+  return await planets.find(
+    {},
+    {
+      __v: 0,
+      _id: 0,
+    }
+  );
 };
 
 module.exports = {
