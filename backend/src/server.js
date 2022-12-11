@@ -1,4 +1,5 @@
 const http = require("http");
+const { connectDB } = require("../src/database/connection.js");
 
 const app = require("./app");
 
@@ -9,6 +10,7 @@ const PORT = process.env.PORT || 8000;
 const server = http.createServer(app);
 
 async function startServer() {
+  await connectDB();
   await loadPlanetsData();
 
   server.listen(PORT, () =>
