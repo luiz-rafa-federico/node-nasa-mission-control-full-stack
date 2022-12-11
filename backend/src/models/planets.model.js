@@ -1,7 +1,10 @@
 const { parse } = require("csv-parse");
+// const path = require("path")
 const fs = require("fs");
 
-const habitablePlanets = [];
+const planets = require("./planets.mongo.js");
+
+// const habitablePlanets = [];
 
 const isHabitablePlanet = (planet) => {
   return (
@@ -24,9 +27,11 @@ const loadPlanetsData = () => {
           columns: true,
         })
       )
-      .on("data", (data) => {
+      .on("data", async (data) => {
         if (isHabitablePlanet(data)) {
-          habitablePlanets.push(data);
+          // habitablePlanets.push(data)
+          // insert + update = upsert => create only if does not exist on db
+          await savePlanets(data);
         }
       })
       .on("error", (err) => {
@@ -37,20 +42,21 @@ const loadPlanetsData = () => {
   });
 };
 
-module.exports = {
-  loadPlanetsData,
-  planets: habitablePlanets,
+const savePlanets = async (planet) => {
+  try {
+    await planets.updateOne(
+      {
+        kepler_name: planet.kepler_name,
+      },
+      { kepler_name: planet.kepler_name },
+      { upsert: true }
+    );
+  } catch (err) {
+    console.error(`Failed to save planets due to ${err}`);
+  }
 };
 
-// CREATING A MODEL WITH MONGOOSE
-
-const mongoose = require("mongoose");
-
-const planetSchema = new mongoose.Schema({
-  kepler_name: {
-    type: String,
-    required: true,
-  },
-});
-
-mongoose.model("Planet", planetSchema);
+module.exports = {
+  loadPlanetsData,
+  // planets: habitablePlanets,
+};

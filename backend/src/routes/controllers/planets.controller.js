@@ -1,7 +1,7 @@
 const { getAllPlanets } = require("./services/planets.service");
 
-const httpListPlanets = (req, res) => {
-  const planets = getAllPlanets();
+const httpListPlanets = async (req, res) => {
+  const planets = await getAllPlanets();
 
   return res.json(planets);
 };

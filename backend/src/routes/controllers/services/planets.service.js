@@ -1,7 +1,8 @@
-const { planets } = require("../../../models/planets.model");
+// const { planets } = require("../../../models/planets.model");
+const planets = require("../../../models/planets.mongo.js");
 
-const getAllPlanets = () => {
-  return planets;
+const getAllPlanets = async () => {
+  return await planets.find({});
 };
 
 module.exports = {
