@@ -1,8 +1,49 @@
+const mongoose = require("mongoose");
+
+const launchSchema = new mongoose.Schema({
+  flightNumber: {
+    type: Number,
+    required: true,
+  },
+  mission: {
+    type: String,
+    required: true,
+  },
+  rocket: {
+    type: String,
+    required: true,
+  },
+  launchDate: {
+    type: Date,
+    required: true,
+  },
+  destination: {
+    type: String,
+    required: true,
+  },
+  customers: [String],
+  upcoming: {
+    type: Boolean,
+    required: true,
+    default: true,
+  },
+  success: {
+    type: Boolean,
+    required: true,
+    default: true,
+  },
+});
+
+mongoose.model("Launch", launchSchema);
+
+/* 
+HARD CODED DATA = NO DB
+
 const launches = new Map();
 
-// as long we have launches stored in memory, and when we make a request,
-// we never know which server we are talking to. So we need a database, an external
-// place that is independent of the process.
+as long we have launches stored in memory, and when we make a request,
+we never know which server we are talking to. So we need a database, an external
+place that is independent of the process.
 
 let latestFlightNumber = 100;
 
@@ -23,3 +64,4 @@ module.exports = {
   launches,
   latestFlightNumber,
 };
+*/

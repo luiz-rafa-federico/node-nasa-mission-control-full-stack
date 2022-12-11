@@ -41,3 +41,16 @@ module.exports = {
   loadPlanetsData,
   planets: habitablePlanets,
 };
+
+// CREATING A MODEL WITH MONGOOSE
+
+const mongoose = require("mongoose");
+
+const planetSchema = new mongoose.Schema({
+  kepler_name: {
+    type: String,
+    required: true,
+  },
+});
+
+mongoose.model("Planet", planetSchema);
