@@ -33,7 +33,7 @@ const scheduleLaunch = async (launch) => {
 
 const saveLaunch = async (newLaunch) => {
   try {
-    const planet = await planets.findOneAndUpdate({
+    const planet = await planets.findOne({
       kepler_name: newLaunch.destination,
     });
 
@@ -41,7 +41,7 @@ const saveLaunch = async (newLaunch) => {
       throw new Error("No matching planet found");
     }
 
-    await launches.updateOne(
+    await launches.findOneAndUpdate(
       {
         flightNumber: newLaunch.flightNumber,
       },
