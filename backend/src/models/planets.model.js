@@ -2,7 +2,7 @@ const { parse } = require("csv-parse");
 // const path = require("path")
 const fs = require("fs");
 
-const planets = require("./planets.mongo.js");
+const planets = require("./mongo/planets.mongo");
 
 // const habitablePlanets = [];
 

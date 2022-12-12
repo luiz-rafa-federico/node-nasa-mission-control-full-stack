@@ -1,4 +1,4 @@
-const launches = new Map();
+// const launches = new Map();
 
 // as long we have launches stored in memory, and when we make a request,
 // we never know which server we are talking to. So we need a database, an external

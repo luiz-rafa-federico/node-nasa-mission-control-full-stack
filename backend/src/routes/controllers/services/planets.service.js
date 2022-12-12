@@ -1,5 +1,5 @@
 // const { planets } = require("../../../models/planets.model");
-const planets = require("../../../models/planets.mongo.js");
+const planets = require("../../../models/mongo/planets.mongo.js");
 
 const getAllPlanets = async () => {
   return await planets.find(

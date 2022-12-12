@@ -1,4 +1,4 @@
-const launches = require("../../../models/launches.mongo.js");
+const launches = require("../../../models/mongo/launches.mongo");
 
 const getAllLaunches = async () => {
   // for (const value of launches.values()) {}
