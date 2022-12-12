@@ -3,7 +3,7 @@ const express = require("express");
 const {
   httpCreateLaunch,
   httpListLaunches,
-  httpDeleteLaunch,
+  httpAbortLaunch,
 } = require("./controllers/launches.controller");
 
 const launchesRouter = express.Router({ mergeParams: true });
@@ -16,7 +16,7 @@ const launchesRouter = express.Router({ mergeParams: true });
 const launchesRoutes = () => {
   launchesRouter.post("/", httpCreateLaunch);
   launchesRouter.get("/", httpListLaunches);
-  launchesRouter.delete("/:flightNumber", httpDeleteLaunch);
+  launchesRouter.delete("/:flightNumber", httpAbortLaunch);
 
   return launchesRouter;
 };

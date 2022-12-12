@@ -65,7 +65,7 @@ const httpListLaunches = async (req, res) => {
   return res.status(200).json(launches);
 };
 
-const httpDeleteLaunch = (req, res) => {
+const httpAbortLaunch = (req, res) => {
   const { flightNumber } = req.params;
 
   if (!flightNumber) {
@@ -86,5 +86,5 @@ const httpDeleteLaunch = (req, res) => {
 module.exports = {
   httpCreateLaunch,
   httpListLaunches,
-  httpDeleteLaunch,
+  httpAbortLaunch,
 };
