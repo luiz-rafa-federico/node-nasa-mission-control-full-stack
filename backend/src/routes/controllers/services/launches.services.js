@@ -1,4 +1,6 @@
 const launches = require("../../../models/mongo/launches.mongo");
+const planets = require("../../../models/mongo/planets.mongo");
+const { getLatestFlightNumber } = require("../../../models/launches.model");
 
 const getAllLaunches = async () => {
   // for (const value of launches.values()) {}
@@ -12,16 +14,42 @@ const getAllLaunches = async () => {
   );
 };
 
-const saveLaunch = async (launch) => {
+const scheduleLaunch = async (launch) => {
+  const newLaunch = Object.assign(launch, {
+    customers: ["Zero To Mastery", "NASA"],
+    upcoming: true,
+    success: true,
+    flightNumber: (await getLatestFlightNumber()) + 1,
+  });
+
+  const launchScheduled = await saveLaunch(newLaunch);
+
+  if (!launchScheduled) {
+    throw new Error("Failed to schedule launch");
+  }
+
+  return launchScheduled;
+};
+
+const saveLaunch = async (newLaunch) => {
   try {
+    const planet = await planets.findOneAndUpdate({
+      kepler_name: newLaunch.destination,
+    });
+
+    if (!planet) {
+      throw new Error("No matching planet found");
+    }
+
     await launches.updateOne(
       {
-        flightNumber: launch.flightNumber,
+        flightNumber: newLaunch.flightNumber,
       },
-      launch,
+      newLaunch,
       { upsert: true }
     );
-    return true;
+
+    return newLaunch;
   } catch (err) {
     console.error(err);
   }
@@ -58,5 +86,5 @@ const saveLaunch = async (launch) => {
 
 module.exports = {
   getAllLaunches,
-  saveLaunch,
+  scheduleLaunch,
 };

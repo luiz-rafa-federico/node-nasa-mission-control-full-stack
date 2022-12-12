@@ -1,4 +1,7 @@
-const { getAllLaunches, saveLaunch } = require("./services/launches.services");
+const {
+  getAllLaunches,
+  scheduleLaunch,
+} = require("./services/launches.services");
 
 const httpCreateLaunch = async (req, res) => {
   const fields = ["mission", "rocket", "launchDate", "destination"];
@@ -47,10 +50,10 @@ const httpCreateLaunch = async (req, res) => {
     });
   }
 
-  const response = await saveLaunch(launch);
+  const newLaunch = await scheduleLaunch(launch);
 
-  if (response) {
-    return res.status(201).json({ message: "Launch created" });
+  if (newLaunch) {
+    return res.status(201).json({ message: "Launch created", newLaunch });
   } else {
     return res.status(400).json({ error: "Failed to create launch" });
   }
