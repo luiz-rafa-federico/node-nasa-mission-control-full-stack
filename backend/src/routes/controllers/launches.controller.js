@@ -1,6 +1,7 @@
 const {
   getAllLaunches,
   scheduleLaunch,
+  abortLaunch,
 } = require("./services/launches.services");
 
 const httpCreateLaunch = async (req, res) => {
@@ -65,22 +66,22 @@ const httpListLaunches = async (req, res) => {
   return res.status(200).json(launches);
 };
 
-const httpAbortLaunch = (req, res) => {
+const httpAbortLaunch = async (req, res) => {
   const { flightNumber } = req.params;
 
   if (!flightNumber) {
     return res.status(400).json({ error: "Missing Flight Number" });
   }
 
-  const abortedMission = abortLaunch(Number(flightNumber));
+  const abortedMission = await abortLaunch(Number(flightNumber));
 
-  if (abortedMission) {
-    return res.status(200).json({
-      message: `Mission ${abortedMission.flightNumber} has been successfully aborted`,
-    });
-  } else {
+  if (!abortedMission) {
     return res.status(400).json({ error: "Failed to abort launch" });
   }
+
+  return res.status(200).json({
+    message: `Mission ${abortedMission.flightNumber} has been successfully aborted`,
+  });
 };
 
 module.exports = {

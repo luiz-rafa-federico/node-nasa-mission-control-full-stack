@@ -71,20 +71,35 @@ const saveLaunch = async (newLaunch) => {
 //   return launches;
 // };
 
-// const abortLaunch = (flightNumber) => {
-//   const launchToBeAborted = launches.get(flightNumber);
+const abortLaunch = async (flightNumber) => {
+  // const launchToBeAborted = launches.get(flightNumber);
+  try {
+    const launchToBeAborted = await launches.findOne({
+      flightNumber: flightNumber,
+    });
 
-//   if (launchToBeAborted) {
-//     // launches.delete(flightNumber);
-//     launchToBeAborted.upcoming = false;
-//     launchToBeAborted.success = false;
-//     return launchToBeAborted;
-//   } else {
-//     return false;
-//   }
-// };
+    if (!launchToBeAborted) {
+      throw new Error("No matching flight number found");
+    }
+
+    // launchToBeAborted.success = false;
+    // launchToBeAborted.upcoming = false;
+
+    // await saveLaunch(launchToBeAborted);
+
+    const aborted = await launches.findOneAndUpdate(
+      { flightNumber: flightNumber },
+      { success: false, upcoming: false }
+    );
+
+    return aborted;
+  } catch (err) {
+    console.error(err);
+  }
+};
 
 module.exports = {
   getAllLaunches,
   scheduleLaunch,
+  abortLaunch,
 };
