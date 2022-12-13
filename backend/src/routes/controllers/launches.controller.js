@@ -54,7 +54,9 @@ const httpCreateLaunch = async (req, res) => {
   const newLaunch = await scheduleLaunch(launch);
 
   if (newLaunch) {
-    return res.status(201).json({ message: "Launch created", newLaunch });
+    return res
+      .status(201)
+      .json({ message: `Launch ${newLaunch.mission} created`, newLaunch });
   } else {
     return res.status(400).json({ error: "Failed to create launch" });
   }
