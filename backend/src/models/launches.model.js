@@ -5,19 +5,25 @@
 // place that is independent of the process.
 
 const launches = require("./mongo/launches.mongo");
+const axios = require("axios");
+const {
+  saveLaunch,
+} = require("../routes/controllers/services/launches.services");
 
 let DEFAULT_FLIGHT_NUMBER = 100;
 
-const launch = {
-  flightNumber: 100,
-  mission: "Kepler Exploration X",
-  rocket: "Explorer IS1",
-  launchDate: new Date("December 27, 2030"),
-  destination: "Kepler-442 b",
-  customers: ["ZTM", "NASA"],
-  upcoming: true,
-  success: true,
-};
+const SPACEX_API_URL = "https://api.spacexdata.com/v4/launches/query";
+
+// const launch = {
+//   flightNumber: 100,
+//   mission: "Kepler Exploration X",
+//   rocket: "Explorer IS1",
+//   launchDate: new Date("December 27, 2030"),
+//   destination: "Kepler-442 b",
+//   customers: ["ZTM", "NASA"],
+//   upcoming: true,
+//   success: true,
+// };
 
 async function getLatestFlightNumber() {
   const latestLaunch = await launches.findOne().sort("-flightNumber");
@@ -29,8 +35,50 @@ async function getLatestFlightNumber() {
   return latestLaunch.flightNumber;
 }
 
+async function loadLaunchesData() {
+  const response = await axios.post(SPACEX_API_URL, {
+    query: {},
+    options: {
+      populate: [
+        {
+          path: "rocket",
+          select: {
+            name: 1,
+          },
+        },
+        {
+          path: "payloads",
+          select: {
+            customers: 1,
+          },
+        },
+      ],
+    },
+  });
+
+  const spaceXLaunchesData = response.data.docs;
+
+  for (let launch of spaceXLaunchesData) {
+    const payloads = launch["payloads"];
+    const customers = payloads.flatMap((payload) => payload["customers"]);
+
+    let launchData = {
+      flightNumber: launch["flight_number"],
+      mission: launch["name"],
+      rocket: launch["rocket"]["name"],
+      upcoming: launch["upcoming"],
+      success: launch["success"],
+      customers,
+      launchDate: launch["date_local"],
+    };
+
+    // saveLaunch(launchData)
+  }
+}
+
 // launches.set(launch.flightNumber, launch);
 
 module.exports = {
   getLatestFlightNumber,
+  loadLaunchesData,
 };
