@@ -16,6 +16,7 @@ const getAllLaunches = async (pagination) => {
         _id: 0,
       }
     )
+    .sort("flightNumber")
     .skip(skip)
     .limit(docsLimit);
 };
