@@ -15,6 +15,14 @@ const getAllLaunches = async () => {
 };
 
 const scheduleLaunch = async (launch) => {
+  const planet = await planets.findOne({
+    kepler_name: launch.destination,
+  });
+
+  if (!planet) {
+    throw new Error("No matching planet found");
+  }
+
   const newLaunch = Object.assign(launch, {
     customers: ["Zero To Mastery", "NASA"],
     upcoming: true,
@@ -33,14 +41,6 @@ const scheduleLaunch = async (launch) => {
 
 const saveLaunch = async (newLaunch) => {
   try {
-    const planet = await planets.findOne({
-      kepler_name: newLaunch.destination,
-    });
-
-    if (!planet) {
-      throw new Error("No matching planet found");
-    }
-
     await launches.findOneAndUpdate(
       {
         flightNumber: newLaunch.flightNumber,

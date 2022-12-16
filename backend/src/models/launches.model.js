@@ -39,46 +39,65 @@ async function getLatestFlightNumber() {
   return latestLaunch.flightNumber;
 }
 
+async function populateLaunches() {
+  try {
+    const response = await axios.post(SPACEX_API_URL, {
+      query: {},
+      options: {
+        pagination: false,
+        populate: [
+          {
+            path: "rocket",
+            select: {
+              name: 1,
+            },
+          },
+          {
+            path: "payloads",
+            select: {
+              customers: 1,
+            },
+          },
+        ],
+      },
+    });
+
+    const spaceXLaunchesData = response.data.docs;
+
+    for (let launch of spaceXLaunchesData) {
+      const payloads = launch["payloads"];
+      const customers = payloads.flatMap((payload) => payload["customers"]);
+
+      let launchData = {
+        flightNumber: launch["flight_number"],
+        mission: launch["name"],
+        rocket: launch["rocket"]["name"],
+        upcoming: launch["upcoming"],
+        success: launch["success"],
+        customers,
+        launchDate: launch["date_local"],
+      };
+
+      saveLaunch(launchData);
+    }
+  } catch (err) {
+    console.error(err);
+  }
+}
+
 async function loadLaunchesData() {
-  const response = await axios.post(SPACEX_API_URL, {
-    query: {},
-    options: {
-      pagination: false,
-      populate: [
-        {
-          path: "rocket",
-          select: {
-            name: 1,
-          },
-        },
-        {
-          path: "payloads",
-          select: {
-            customers: 1,
-          },
-        },
-      ],
-    },
+  const firstLaunch = await findLaunch({
+    flightNumber: 1,
+    rocket: "Falcon 1",
+    mission: "FalconSat",
   });
 
-  const spaceXLaunchesData = response.data.docs;
-
-  for (let launch of spaceXLaunchesData) {
-    const payloads = launch["payloads"];
-    const customers = payloads.flatMap((payload) => payload["customers"]);
-
-    let launchData = {
-      flightNumber: launch["flight_number"],
-      mission: launch["name"],
-      rocket: launch["rocket"]["name"],
-      upcoming: launch["upcoming"],
-      success: launch["success"],
-      customers,
-      launchDate: launch["date_local"],
-    };
-
-    // saveLaunch(launchData)
+  if (firstLaunch) {
+    console.log("Launch SpaceX data already loaded!!");
+    return;
   }
+
+  await populateLaunches();
 }
 
 // launches.set(launch.flightNumber, launch);
