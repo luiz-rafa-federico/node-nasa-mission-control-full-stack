@@ -2,16 +2,22 @@ const launches = require("../../../models/mongo/launches.mongo");
 const planets = require("../../../models/mongo/planets.mongo");
 const { getLatestFlightNumber } = require("../../../models/launches.model");
 
-const getAllLaunches = async () => {
+const getAllLaunches = async (pagination) => {
   // for (const value of launches.values()) {}
   // return Array.from(launches.values());
-  return await launches.find(
-    {},
-    {
-      __v: 0, // version
-      _id: 0,
-    }
-  );
+
+  const { skip, docsLimit } = pagination;
+
+  return await launches
+    .find(
+      {},
+      {
+        __v: 0, // version
+        _id: 0,
+      }
+    )
+    .skip(skip)
+    .limit(docsLimit);
 };
 
 const scheduleLaunch = async (launch) => {

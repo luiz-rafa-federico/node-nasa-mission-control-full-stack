@@ -1,3 +1,4 @@
+const { getPagination } = require("../../database/query");
 const {
   getAllLaunches,
   scheduleLaunch,
@@ -63,7 +64,11 @@ const httpCreateLaunch = async (req, res) => {
 };
 
 const httpListLaunches = async (req, res) => {
-  const launches = await getAllLaunches();
+  const { limit, page } = req.query;
+
+  const pagination = getPagination(limit, page);
+
+  const launches = await getAllLaunches(pagination);
 
   return res.status(200).json(launches);
 };
