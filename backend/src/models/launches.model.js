@@ -25,6 +25,10 @@ const SPACEX_API_URL = "https://api.spacexdata.com/v4/launches/query";
 //   success: true,
 // };
 
+async function findLaunch(filter) {
+  return await launches.findOne(filter);
+}
+
 async function getLatestFlightNumber() {
   const latestLaunch = await launches.findOne().sort("-flightNumber");
 
@@ -39,6 +43,7 @@ async function loadLaunchesData() {
   const response = await axios.post(SPACEX_API_URL, {
     query: {},
     options: {
+      pagination: false,
       populate: [
         {
           path: "rocket",
