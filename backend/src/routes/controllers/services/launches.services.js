@@ -1,6 +1,15 @@
 const launches = require("../../../models/mongo/launches.mongo");
 const planets = require("../../../models/mongo/planets.mongo");
-const { getLatestFlightNumber } = require("../../../models/launches.model");
+
+async function getLatestFlightNumber() {
+  const latestLaunch = await launches.findOne().sort("-flightNumber");
+
+  if (!latestLaunch) {
+    return DEFAULT_FLIGHT_NUMBER;
+  }
+
+  return latestLaunch.flightNumber;
+}
 
 const getAllLaunches = async (pagination) => {
   // for (const value of launches.values()) {}

@@ -29,16 +29,6 @@ async function findLaunch(filter) {
   return await launches.findOne(filter);
 }
 
-async function getLatestFlightNumber() {
-  const latestLaunch = await launches.findOne().sort("-flightNumber");
-
-  if (!latestLaunch) {
-    return DEFAULT_FLIGHT_NUMBER;
-  }
-
-  return latestLaunch.flightNumber;
-}
-
 async function populateLaunches() {
   try {
     const response = await axios.post(SPACEX_API_URL, {
@@ -103,6 +93,5 @@ async function loadLaunchesData() {
 // launches.set(launch.flightNumber, launch);
 
 module.exports = {
-  getLatestFlightNumber,
   loadLaunchesData,
 };
