@@ -6,7 +6,7 @@
   "scripts": {
     "test": "npm test --prefix backend && npm test --prefix frontend",
     "install-server": "npm install --prefix backend",
-    "install-client": "npm install --prefix client",
+    "install-client": "npm install --prefix frontend",
     "install": "npm run install-server && npm run install-client",
     "server": "npm run watch --prefix backend",
     "client": "npm run start --prefix frontend",
