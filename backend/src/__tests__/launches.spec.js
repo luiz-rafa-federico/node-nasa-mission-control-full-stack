@@ -1,12 +1,14 @@
 const request = require("supertest");
 const app = require("../app.js");
 const { connectDB, disconnectDB } = require("../database/connection");
+const { loadLaunchesData } = require("../models/launches.model.js");
 
 const API_VERSION = "v1";
 
 describe("Launches API", () => {
   beforeAll(async () => {
     await connectDB();
+    await loadLaunchesData();
   });
 
   afterAll(async () => {
