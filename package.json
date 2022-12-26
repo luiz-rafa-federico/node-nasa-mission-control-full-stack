@@ -12,7 +12,8 @@
     "client": "npm run start --prefix frontend",
     "watch": "npm run server & npm run client",
     "deploy": "npm run build --prefix frontend && npm start --prefix backend",
-    "deploy-cluster": "npm run build --prefix frontend && npm run cluster --prefix backend"
+    "deploy-cluster": "npm run build --prefix frontend && npm run cluster --prefix backend",
+    "docker": "docker build . -t luizrafa/nasa-project && docker run -it -p 8000:8000 luizrafa/nasa-project"
   },
   "repository": {
     "type": "git",
