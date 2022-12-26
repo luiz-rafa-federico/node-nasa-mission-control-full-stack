@@ -1,5 +1,5 @@
 const { parse } = require("csv-parse");
-// const path = require("path")
+const path = require("path");
 const fs = require("fs");
 
 const planets = require("./mongo/planets.mongo");
@@ -17,9 +17,8 @@ const isHabitablePlanet = (planet) => {
 
 const loadPlanetsData = () => {
   return new Promise((resolve, reject) => {
-    // fs.createReadStream(path.join(__dirname, '..', '..', 'data', 'kepler_data.csv'))
     fs.createReadStream(
-      "/Users/luizrafa.federico/Desktop/luiz/Tech/backend/node/node-nasa-mission-control-full-stack/backend/data/kepler_data.csv"
+      path.join(__dirname, "..", "..", "data", "kepler_data.csv")
     )
       .pipe(
         parse({
