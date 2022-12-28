@@ -3,8 +3,6 @@ const app = require("../app.js");
 const { connectDB, disconnectDB } = require("../database/connection");
 const { loadLaunchesData } = require("../models/launches.model.js");
 
-const API_VERSION = "v1";
-
 describe("Launches API", () => {
   beforeAll(async () => {
     await connectDB();
@@ -18,10 +16,9 @@ describe("Launches API", () => {
   describe("Test GET /launches", () => {
     test("It should respond with a 200 code success", async () => {
       const response = await request(app)
-        .get(`/${API_VERSION}/launches`)
+        .get(`/v1/launches`)
         .expect("Content-Type", /json/)
         .expect(200);
-      // expect(response.statusCode).toBe(200); => this is from jest; the above is from supertest
     });
   });
 
@@ -48,7 +45,7 @@ describe("Launches API", () => {
 
     test("It should respond with a 201 code success", async () => {
       const response = await request(app)
-        .post(`/${API_VERSION}/launches`)
+        .post(`/v1/launches`)
         .send(completeLaunch)
         .expect("Content-Type", /json/)
         .expect(201);
